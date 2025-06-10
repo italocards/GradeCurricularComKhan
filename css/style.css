@@ -1,0 +1,261 @@
+/* css/style.css */
+body {
+  font-family: 'Poppins', sans-serif; /* Usando Poppins */
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a2a3a, #0d1a2a); /* Gradiente mais suave */
+  color: #e0e7ff; /* Cor de texto padrão */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza o conteúdo */
+  min-height: 100vh;
+}
+
+.header-container { /* New container for header elements */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.main-content-container { /* New container for SVG and topological order */
+  display: flex;
+  align-items: flex-start; /* Alinha os itens (SVG e caixa de resultados) no topo */
+  gap: 20px; /* Espaço entre o SVG e a caixa de resultados */
+  margin-bottom: 30px; /* Space before the new plan result div */
+}
+
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #8be9fd; /* Azul claro */
+  font-size: 2.5em;
+  margin-bottom: 5px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #bd93f9; /* Roxo */
+  font-size: 1.2em;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Planning Controls styling */
+.planning-controls {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: rgba(36, 42, 58, 0.7);
+  padding: 15px 25px;
+  border-radius: 8px;
+  border: 1px solid #6272a4;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.planning-controls label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  color: #e0e7ff;
+  font-size: 1em;
+}
+
+.planning-controls input[type="number"] {
+  padding: 8px 12px;
+  border: 1px solid #6272a4;
+  border-radius: 5px;
+  background-color: #282a36;
+  color: #f8f8f2;
+  font-size: 1em;
+  width: 60px;
+  text-align: center;
+}
+
+.planning-controls button {
+  background-color: #50fa7b; /* Verde vibrante */
+  color: #282a36; /* Cor de texto escuro */
+  border: none;
+  padding: 10px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1em;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.planning-controls button:hover {
+  background-color: #44c76a; /* Tom mais escuro no hover */
+  transform: translateY(-1px);
+}
+
+.planning-controls button:active {
+  transform: translateY(0);
+}
+
+
+svg {
+  border: 2px solid #6272a4; /* Borda mais suave */
+  background: #2f095a; /* Fundo original do SVG */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Sombra mais proeminente */
+  border-radius: 12px; /* Cantos arredondados */
+  width: 1500px;
+  height: 1800px;
+}
+
+.semester-box {
+  fill: #44475a; /* Cinza escuro suave */
+  stroke: #6272a4; /* Roxo acinzentado */
+  stroke-width: 2px;
+  opacity: 0.3; /* Mais opaco para dar profundidade */
+  border-radius: 8px; /* Cantos arredondados */
+}
+
+.semester-label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  fill: #f8f8f2; /* Branco quase puro */
+  font-size: 1.1em;
+}
+
+.node circle {
+  fill: #8e2de2; /* Roxo vibrante */
+  stroke: #4a00e0; /* Roxo mais escuro para a borda */
+  stroke-width: 3px; /* Borda mais visível */
+  cursor: grab;
+  transition: all 0.2s ease-in-out; /* Transição suave para interações */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para o nó */
+}
+
+.node circle:hover {
+  fill: #6a1a7a; /* Mudar cor ao passar o mouse */
+  stroke: #3c004d;
+  transform: scale(1.05); /* Pequeno zoom ao passar o mouse */
+}
+
+.node text {
+  font-family: 'Poppins', sans-serif;
+  fill: #f8f8f2; /* Texto branco */
+  font-size: 11px; /* Ajuste para melhor legibilidade */
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para o texto do nó */
+}
+
+line.link {
+  stroke: #6272a4; /* Cor do link que combina com a borda do semestre */
+  stroke-width: 2.5px; /* Mais espesso */
+  marker-end: url(#arrow);
+  opacity: 0.7; /* Suave */
+}
+
+/* Estilo para a seta */
+#arrow path {
+  fill: #6272a4; /* Cor da seta para combinar com o link */
+}
+
+
+/* Estados de Highlight */
+.highlighted {
+  fill: #50fa7b !important; /* Verde vibrante */
+  stroke: #2e8b57 !important; /* Verde mais escuro */
+  stroke-width: 4px !important;
+  box-shadow: 0 0 15px rgba(80, 250, 123, 0.6) !important; /* Brilho verde */
+}
+
+circle.highlight2 {
+  fill: #ffb86c !important; /* Laranja suave */
+  stroke: #e6934c !important; /* Laranja mais escuro */
+  stroke-width: 4px !important;
+  box-shadow: 0 0 15px rgba(255, 184, 108, 0.6) !important; /* Brilho laranja */
+}
+
+
+/* Estilo da caixa de resultado da ordenação topológica (agora dentro do foreignObject) */
+/* Este estilo será aplicado ao div HTML *dentro* do foreignObject */
+#topological-order-content { /* ID do div HTML interno ao foreignObject */
+  width: 100%; /* Ocupa 100% da largura do foreignObject pai */
+  /* Removido height e max-height, confiando no overflow-y e no foreignObject pai */
+  overflow-y: auto;
+  padding: 15px;
+  border: 1px solid #6272a4; /* Borda que combina */
+  background-color: rgba(36, 42, 58, 0.9); /* Fundo semi-transparente */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 8px; /* Cantos arredondados */
+  color: #f8f8f2; /* Texto branco */
+  font-size: 0.9em;
+  line-height: 1.4;
+  z-index: 1000; /* Z-index para garantir que fique por cima */
+  text-align: left;
+}
+
+#topological-order-content strong {
+  color: #ff79c6; /* Rosa vibrante para o título do resultado */
+  font-weight: 600;
+}
+
+/* New: Semester Planning Result Area */
+.planning-result {
+  width: 80%; /* Adjust width as needed */
+  max-width: 1500px; /* Same as SVG width for alignment */
+  background-color: rgba(36, 42, 58, 0.8);
+  border: 1px solid #6272a4;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px; /* Space from the main content */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  color: #e0e7ff;
+  text-align: left;
+  overflow-x: auto; /* For wide tables */
+}
+
+.planning-result h3 {
+  color: #8be9fd;
+  font-size: 1.5em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.planning-result table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.planning-result th, .planning-result td {
+  border: 1px solid #44475a;
+  padding: 10px;
+  text-align: left;
+}
+
+.planning-result th {
+  background-color: #4a00e0; /* Roxo escuro */
+  color: #f8f8f2;
+  font-weight: 600;
+}
+
+/* Adjust column widths for the planning result table */
+.planning-result th:first-child,
+.planning-result td:first-child {
+  width: 15%; /* Diminui a largura da coluna do semestre */
+  min-width: 80px; /* Garante um tamanho mínimo */
+  text-align: center;
+}
+
+.planning-result th:last-child,
+.planning-result td:last-child {
+  width: 85%; /* Aumenta a largura da coluna das cadeiras */
+}
+
+
+.planning-result tr:nth-child(even) {
+  background-color: #282a36; /* Fundo mais escuro para linhas pares */
+}
+
+.planning-result tr:hover {
+  background-color: #383a48; /* Leve hover effect */
+}

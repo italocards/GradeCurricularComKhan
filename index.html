@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grade Curricular com D3.js</title>
+  <!-- Link para a fonte Poppins do Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <!-- Link para o arquivo CSS externo -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="header-container"> <h1>Ordenação Topológica e Sugestão de Caminhos em Currículos Acadêmicos</h1>
+    <h2 class="subtitle">Usando: Kahn Modificado com D3.js</h2>
+    
+  </div>
+
+  <div class="main-content-container"> <svg id="svg" width="1500" height="1800"></svg>
+    </div>
+    <div class="planning-controls">
+        <label for="coursesPerSemester">Máximo de cadeiras por semestre:</label>
+        <input type="number" id="coursesPerSemester" value="5" min="1">
+        <button id="simulateButton">Simular Próximos Semestres</button>
+    </div>
+
+  <div id="semester-plan-result" class="planning-result"></div> <script src="js/data.js"></script>
+<script src="js/visualization.js"></script>
+<script src="js/topologicalSort.js"></script>
+
+<script>
+  // Inicialização da ordenação topológica e destaque após todos os scripts carregarem
+  let nosMarcados = new Set(); // Inicializa o conjunto global de nós marcados
+
+  // Executa a ordenação topológica inicial e destaca o próximo nó
+  // Chamada para atualizar o display da ordem topológica (true para atualizar a exibição)
+  const ordemTopologica = executarKahnComMarcados(nodesData, linksData, nosMarcados, true);
+  destacarProximoNo(ordemTopologica, nosMarcados, node);
+
+  node.on("dblclick", function(event, d) {
+    const circulo = d3.select(this).select("circle");
+    const estaMarcado = circulo.classed("highlighted");
+    circulo.classed("highlighted", !estaMarcado);
+
+    if (!estaMarcado) {
+      const preRequisitos = obterPreRequisitos(d.id, nodesData, linksData);
+      preRequisitos.forEach(noPreReq => {
+        node
+          .filter(nd => nd.id === noPreReq.id)
+          .select("circle")
+          .classed("highlighted", true);
+      });
+    } else {
+      const dependentes = obterDependentes(d.id, nodesData, linksData);
+      const todosParaDesmarcar = new Set(dependentes);
+      todosParaDesmarcar.add(d); // inclui o nó clicado
+
+      todosParaDesmarcar.forEach(noParaDesmarcar => {
+        node
+          .filter(nd => nd.id === noParaDesmarcar.id)
+          .select("circle")
+          .classed("highlighted", false);
+      });
+    }
+
+    nosMarcados = atualizarNosMarcados(node);
+    const ordemAtualizada = executarKahnComMarcados(nodesData, linksData, nosMarcados, true);
+    destacarProximoNo(ordemAtualizada, nosMarcados, node);
+  });
+
+  // Listener para o botão de simular próximos semestres
+  document.getElementById("simulateButton").addEventListener("click", () => {
+    const maximoPorSemestre = parseInt(document.getElementById("coursesPerSemester").value);
+    if (isNaN(maximoPorSemestre) || maximoPorSemestre <= 0) {
+      alert("Por favor, insira um número válido e positivo de cadeiras por semestre.");
+      return;
+    }
+    const plano = simularPlanoDeSemestres(nodesData, linksData, nosMarcados, maximoPorSemestre);
+    exibirPlanoDeSemestres(plano);
+  });
+</script>
+
+</body>
+</html>
