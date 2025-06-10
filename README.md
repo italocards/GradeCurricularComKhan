@@ -30,7 +30,7 @@ Este projeto tem como objetivo auxiliar estudantes e coordenadores no **planejam
 
 1. **Clone o Repositório**  
    ```bash
-   git clone https://github.com/dolthub/dolt
+   git clone https://github.com/italocards/GradeCurricularComKhan.git
    ```
 
 2. **Abra o Projeto**  
